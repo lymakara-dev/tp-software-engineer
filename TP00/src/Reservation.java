@@ -14,14 +14,14 @@ public class Reservation {
             String remark) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        LocalDateTime startTime = LocalDateTime.parse(startTimeString, formatter);
-        LocalDateTime endTime = LocalDateTime.parse(endTimeString, formatter);
+        LocalDateTime startTimeFormatted = LocalDateTime.parse(startTimeString, formatter);
+        LocalDateTime endTimeFormatted = LocalDateTime.parse(endTimeString, formatter);
 
         setRoomNumber(roomNumber);
         setPersonName(personName);
-        setStartTime(startTime);
-        setEndTime(endTime);
-        this.remark = remark;
+        setStartTime(startTimeFormatted);
+        setEndTime(endTimeFormatted);
+        setRemark(remark);
     }
     
 
@@ -32,17 +32,18 @@ public class Reservation {
 
 
     public void setRoomNumber(String roomNumber) {
-        if(roomNumber == null || roomNumber.isEmpty()){
-            throw new IllegalArgumentException("Room number cannot be empty.");
-        }
-        Pattern pattern = Pattern.compile("^[A-Z]-[0-9]{3,3}", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(roomNumber);
-        boolean matchFound = matcher.find();
-        if(matchFound){
-            this.roomNumber=roomNumber;
-            return;
-        }else {
-            throw new IllegalArgumentException("Room number format is not correct. Expected format: A-123");
+        if (roomNumber == null || roomNumber.isEmpty()) {
+            throw new IllegalArgumentException(" Room number cannot be empty");
+        } else {
+            Pattern pattern = Pattern.compile("^[A-Z]-[0-9]{3,3}",
+                    Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(roomNumber);
+            boolean valid = matcher.find();
+            if (valid) {
+                this.roomNumber = roomNumber;
+            } else {
+                throw new IllegalArgumentException(" Please enter valid room number (Example: A-301)");
+            }
         }
     }
 
@@ -53,7 +54,19 @@ public class Reservation {
 
 
     public void setPersonName(String personName) {
-        this.personName = personName;
+        if (personName == null || personName.isEmpty()) {
+            throw new IllegalArgumentException(" Name cannot be empty");
+        } else {
+            Pattern pattern = Pattern.compile("[aeiou]+[bcdfghjklmnpqrstvwxyz]+|[bcdfghjklmnpqrstvwxyz]+[aeiou]+",
+                    Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(personName);
+            boolean valid = matcher.find();
+            if (valid) {
+                this.personName = personName;
+            } else {
+                throw new IllegalArgumentException(" Please enter valid name (Example: Ly Makara)");
+            }
+        }
     }
 
 
@@ -63,6 +76,9 @@ public class Reservation {
     
 
     public void setStartTime(LocalDateTime startTime) {
+        if (startTime.isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException(" Start time must be in the future.");
+        }
         this.startTime = startTime;
     }
 
@@ -73,6 +89,9 @@ public class Reservation {
 
 
     public void setEndTime(LocalDateTime endTime) {
+        if (endTime.isBefore(startTime.plusHours(1))) {
+            throw new IllegalArgumentException(" End time must be at least one hour after the start time.");
+        }
         this.endTime = endTime;
     }
 
@@ -92,4 +111,3 @@ public class Reservation {
         return roomNumber + "\t" + personName + "\t" +  startTime.format(formatter) + "\t" +  endTime.format(formatter) + "\t" +  remark;
     }
 }
-
