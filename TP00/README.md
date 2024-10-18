@@ -9,6 +9,11 @@ The workspace contains two folders by default, where:
 - `src`: the folder to maintain sources
 - `lib`: the folder to maintain dependencies
 
+Inside the `src` folder there are two java file `Main.java` and `Reservation.java`
+
+- `Main.java`: contain of all the function method of the system
+- `Reservation.java`: contain of all attribute, setter that contain all of validation logics, getter, and a constructor for set the values
+
 Meanwhile, the compiled output files will be generated in the `bin` folder by default.
 
 > If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.

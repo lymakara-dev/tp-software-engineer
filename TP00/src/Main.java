@@ -23,7 +23,7 @@ public class Main {
                         scan.next();
                         throw new InputMismatchException("Invalid input: Please enter a valid number.");
                     }
-                    
+
                     switch (chooseFunction) {
                         case 1 -> listAllReservations();
                         case 2 -> addNewReservation(scan);
@@ -146,9 +146,7 @@ public class Main {
         String swapInput = scan.nextLine();
         String[] roomToSwap = swapInput.split(" ");
 
-        System.out.println(swapInput);
-
-        if(swapInput.length() == 2){
+        if(roomToSwap.length == 2){
             Reservation reservation1 = findReservationByRoom(roomToSwap[0]);
             Reservation reservation2 = findReservationByRoom(roomToSwap[1]);
             
