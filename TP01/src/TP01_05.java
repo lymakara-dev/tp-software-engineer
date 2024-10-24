@@ -47,7 +47,7 @@ public class TP01_05 {
             questionCount++;
         }
 
-        // Print results
+        // Print results1
         System.out.println("\nResult: correct = " + correctCount + ", incorrect = " + incorrectCount);
         if (correctCount >= 5) {
             System.out.println("Good job!");
