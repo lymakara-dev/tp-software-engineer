@@ -1,0 +1,6 @@
+{
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "/home/makara/Downloads/softwares/jnativehook-2.2.2.jar"
+  ]
+}
